@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Reunión digital</title>
+    <meta name="description" content="Reunión digital">
+    <meta name="author" content="Partido Digital">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial;
+        }
+
+        .container {
+            color: #3e6189;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        #timer {
+            border-radius: 15px;
+            border: 2px solid #3e6189;
+            margin-top: 0.5em;
+        }
+
+        img {
+            width: 15em;
+            margin-bottom: 2em;
+        }
+
+        h2 {
+            font-weight: normal;
+        }
+
+        a {
+            font-size: 2em;
+            text-decoration: none;
+            margin-top: 0.5em;
+            background-color: #f36f22;
+            border-radius: 15px;
+            padding: 0.4em;
+            color: #fff;
+        }
+
+        a:hover {
+            color: #3e6189;
+        }
+
+        li {
+            display: inline-block;
+            font-size: 1em;
+            list-style-type: none;
+            padding: 0.5em;
+            text-transform: uppercase;
+        }
+
+        li span {
+            display: block;
+            font-size: 3rem;
+        }
+    </style>
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <div class="container">
+        <img src="https://recursos.partidodigital.org.uy/assets/img/logo_original.png" />
+        <div id="timerWrapper">
+            <h2 id="head">Reunión digital</h2>
+            <ul id="timer">
+                <li>
+                    <span id="dias">--</span>días
+                </li>
+                <li>
+                    <span id="horas">--</span>horas
+                </li>
+                <li>
+                    <span id="minutos">--</span>minutos
+                </li>
+                <li>
+                    <span id="segundos">--</span>segundos
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        const second = 1000,
+            minute = second * 60,
+            hour = minute * 60,
+            day = hour * 24;
+
+        let countDown = new Date('Jul 11, 2018 20:00:00').getTime(),
+            x = setInterval(function () {
+
+                let now = new Date().getTime(),
+                    distance = countDown - now;
+
+                let dias = Math.floor(distance / (day));
+                document.getElementById('dias').innerText = ("0" + dias).slice(-2);
+                let horas = Math.floor((distance % (day)) / (hour));
+                document.getElementById('horas').innerText = ("0" + horas).slice(-2);
+                let mins = Math.floor((distance % (hour)) / (minute));
+                document.getElementById('minutos').innerText = ("0" + mins).slice(-2);
+                let segs = Math.floor((distance % (minute)) / second);
+                document.getElementById('segundos').innerText = ("0" + segs).slice(-2);
+
+                if (distance < 0 || document.stopTimer === true) {
+                  clearInterval(x);
+                  document.getElementById('timerWrapper').outerHTML = "<a href='TBD'>¡Entrar a la reunión digital!</a>";
+                }
+            }, second)
+    </script>
+</body>
+
+</html>
