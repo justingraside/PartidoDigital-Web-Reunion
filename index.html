@@ -42,7 +42,7 @@
             margin-bottom: 2em;
         }
 
-        h2, h3 {
+        h2, h3, h4 {
             font-weight: normal;
         }
 
@@ -97,7 +97,8 @@
                     <span id="segundos">--</span>segundos
                 </li>
             </ul>
-            <h3 id="description"><i>Martes 7 de Agosto, 20 hs.</i></h3>
+            <h3 id="description"><i>Martes 14 de Agosto, 20 hs.</i></h3>
+            <h4 id="description"><i>Duración 30 minutos.</i></h4>
         </div>
     </div>
     <script>
@@ -106,7 +107,7 @@
             hour = minute * 60,
             day = hour * 24;
 
-        let countDown = new Date('Aug 7, 2018 20:00:00 GMT-0300').getTime(),
+        let countDown = new Date('Aug 14, 2018 20:00:00 GMT-0300').getTime(),
             x = setInterval(function () {
 
                 let now = new Date().getTime(),
