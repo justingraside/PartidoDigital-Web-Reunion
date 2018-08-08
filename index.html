@@ -9,70 +9,7 @@
     <title>Reunión digital</title>
     <meta name="description" content="Reunión digital">
     <meta name="author" content="Partido Digital">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial;
-        }
-
-        .container {
-            color: #3e6189;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-
-        #timer {
-            border-radius: 15px;
-            border: 2px solid #3e6189;
-            margin-top: 0.5em;
-            margin-bottom: 0.5em;
-        }
-
-        img {
-            width: 15em;
-            margin-bottom: 2em;
-        }
-
-        h2, h3, h4 {
-            font-weight: normal;
-        }
-
-        a {
-            font-size: 2em;
-            text-decoration: none;
-            margin-top: 0.5em;
-            background-color: #f36f22;
-            border-radius: 15px;
-            padding: 0.4em;
-            color: #fff;
-        }
-
-        a:hover {
-            color: #3e6189;
-        }
-
-        li {
-            display: inline-block;
-            font-size: 1em;
-            list-style-type: none;
-            padding: 0.5em;
-            text-transform: uppercase;
-        }
-
-        li span {
-            display: block;
-            font-size: 3rem;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
@@ -80,7 +17,7 @@
 
 <body>
     <div class="container">
-        <img src="https://recursos.partidodigital.org.uy/assets/img/logo_original.png" />
+        <img src="https://recursos.partidodigital.org.uy/assets/img/logo_original.png" id="logo" />
         <div id="timerWrapper">
             <h2 id="head">Reunión digital</h2>
             <ul id="timer">
@@ -97,37 +34,19 @@
                     <span id="segundos">--</span>segundos
                 </li>
             </ul>
-            <h3 id="description"><i>Martes 14 de Agosto, 20 hs.</i></h3>
-            <h4 id="description"><i>Duración 30 minutos.</i></h4>
+            <h3 id="description"></h3>
+            <h4>Duración: 30 minutos.</h4>
+        </div>
+        <div id="instructions">
+            <p>Algunas cosas importantes a saber para hacer una reunión ordenada y que pueda ser aprovechada por todos los participantes:</p>
+            <ul id="steps">
+                <li><img src="images/hand.png" />Para hablar podés hacer click este ícono para pedir la palabra.</li>
+                <li><img src="images/chat.png" />Puedes usar el chat para participar, preguntar o pedir la palabra.</li>
+                <li><img src="images/mute.png" />Mientras no hables te solicitamos que tengas silenciado tu micrófono para disminuir el sonido ambiente.</li>
+            </ul>
         </div>
     </div>
-    <script>
-        const second = 1000,
-            minute = second * 60,
-            hour = minute * 60,
-            day = hour * 24;
-
-        let countDown = new Date('Aug 14, 2018 20:00:00 GMT-0300').getTime(),
-            x = setInterval(function () {
-
-                let now = new Date().getTime(),
-                    distance = countDown - now;
-
-                let dias = Math.floor(distance / (day));
-                document.getElementById('dias').innerText = ("0" + dias).slice(-2);
-                let horas = Math.floor((distance % (day)) / (hour));
-                document.getElementById('horas').innerText = ("0" + horas).slice(-2);
-                let mins = Math.floor((distance % (hour)) / (minute));
-                document.getElementById('minutos').innerText = ("0" + mins).slice(-2);
-                let segs = Math.floor((distance % (minute)) / second);
-                document.getElementById('segundos').innerText = ("0" + segs).slice(-2);
-
-                if (distance < 0 || document.stopTimer === true) {
-                  clearInterval(x);
-                  document.getElementById('timerWrapper').outerHTML = "<a href='https://meet.jit.si/PartidoDigital'>¡Entrar a la reunión digital!</a>";
-                }
-            }, second)
-    </script>
+    <script src="scripts.js"></script>
 </body>
 
 </html>
