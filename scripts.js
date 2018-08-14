@@ -31,7 +31,7 @@ if(proxMartes.getDate() === hoy.getDate() && proxMartes.getMonth() === hoy.getMo
 }
 
 document.getElementById('description').innerHTML = "<i>" + dias[proxReunion.getDay() - 1] + " "
-    + proxReunion.getDate() + " de " + meses[proxReunion.getMonth()] + ", 20 hs.</i>";
+    + proxReunion.getDate() + " de " + meses[proxReunion.getMonth()] + ", 19:30 hs.</i>";
 
 var countDown = proxReunion.getTime(),
 x = setInterval(function () {
