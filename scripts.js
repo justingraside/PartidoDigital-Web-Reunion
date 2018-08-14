@@ -10,7 +10,7 @@ var dias = [ "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "D
 
 function nextDay(d, x){
     var now = new Date(d.getTime());
-    now.setHours(20, 0, 0, 0);
+    now.setHours(19, 30, 0, 0);
     now.setDate(now.getDate() + (x+(7-now.getDay())) % 7);
     now.setTime(now.getTime() + now.getTimezoneOffset() * 60 * 1000 /* convert to UTC */ - (/* UTC-3 */ 3) * 60 * 60 * 1000);
     return now;
@@ -20,20 +20,11 @@ var proxReunion,
     proxMartes = nextDay(hoy, 2);
 if(proxMartes.getDate() === hoy.getDate() && proxMartes.getMonth() === hoy.getMonth()) {
     // Hoy es Martes
-    if(hoy.getHours() < 20) {
+    if(hoy.getHours() <= 19) {
         proxReunion = proxMartes;
     } else {
-        if(hoy.getHours() === 20) {
-            if(hoy.getMinutes() <= 30) {
-                proxReunion = proxMartes;
-            } else {
-                proxMartes.setDate(proxMartes.getDate() + 1);
-                proxReunion = nextDay(proxMartes, 2);
-            }
-        } else {
-            proxMartes.setDate(proxMartes.getDate() + 1);
-            proxReunion = nextDay(proxMartes, 2);
-        }
+        proxMartes.setDate(proxMartes.getDate() + 1);
+        proxReunion = nextDay(proxMartes, 2);
     }
 } else {
     proxReunion = proxMartes;
