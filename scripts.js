@@ -22,7 +22,7 @@ var proxReunion,
     proxMartes = nextDay(hoy, diaReunion);
 if(proxMartes.getDate() === hoy.getDate() && proxMartes.getMonth() === hoy.getMonth()) {
     // Hoy es Martes
-    if(hoy.getHours() <= 19) {
+    if(hoy.getHours() <= horaReunion.h) {
         proxReunion = proxMartes;
     } else {
         proxMartes.setDate(proxMartes.getDate() + 1);
