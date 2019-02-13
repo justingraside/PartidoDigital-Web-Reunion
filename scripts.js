@@ -2,7 +2,9 @@ var second = 1000,
     minute = second * 60,
     hour = minute * 60,
     day = hour * 24,
-    hoy = new Date();
+    hoy = new Date(),
+    diaReunion = 3,
+    horaReunion = { h: 19, m: 0 };
 
 var meses = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
     "Agosto", "Septiembre", "Octubre", "Noviembre", "Septiembre" ];
@@ -10,28 +12,28 @@ var dias = [ "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "D
 
 function nextDay(d, x){
     var now = new Date(d.getTime());
-    now.setHours(19, 30, 0, 0);
+    now.setHours(horaReunion.h, horaReunion.m, 0, 0);
     now.setDate(now.getDate() + (x+(7-now.getDay())) % 7);
     now.setTime(now.getTime() + now.getTimezoneOffset() * 60 * 1000 /* convert to UTC */ - (/* UTC-3 */ 3) * 60 * 60 * 1000);
     return now;
 }
 
 var proxReunion,
-    proxMartes = nextDay(hoy, 2);
+    proxMartes = nextDay(hoy, diaReunion);
 if(proxMartes.getDate() === hoy.getDate() && proxMartes.getMonth() === hoy.getMonth()) {
     // Hoy es Martes
     if(hoy.getHours() <= 19) {
         proxReunion = proxMartes;
     } else {
         proxMartes.setDate(proxMartes.getDate() + 1);
-        proxReunion = nextDay(proxMartes, 2);
+        proxReunion = nextDay(proxMartes, diaReunion);
     }
 } else {
     proxReunion = proxMartes;
 }
 
 document.getElementById('description').innerHTML = "<i>" + dias[proxReunion.getDay() - 1] + " "
-    + proxReunion.getDate() + " de " + meses[proxReunion.getMonth()] + ", 19:30 hs.</i>";
+    + proxReunion.getDate() + " de " + meses[proxReunion.getMonth()] + ", " + horaReunion.h + ":"+ ("0" + horaReunion.m).slice(-2) +" hs.</i>";
 
 var countDown = proxReunion.getTime(),
 x = setInterval(function () {
