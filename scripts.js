@@ -3,8 +3,8 @@ var second = 1000,
     hour = minute * 60,
     day = hour * 24,
     hoy = new Date(),
-    diaReunion = 3,
-    horaReunion = { h: 19, m: 0 };
+    diaReunion = 2,
+    horaReunion = { h: 19, m: 30 };
 
 var meses = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
     "Agosto", "Septiembre", "Octubre", "Noviembre", "Septiembre" ];
