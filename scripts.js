@@ -51,6 +51,62 @@ x = setInterval(function () {
 
     if (distance <= 0 || document.stopTimer === true) {
         clearInterval(x);
-        document.getElementById('timerWrapper').outerHTML = "<a href='https://meet.jit.si/PartidoDigital'>¡Entrar a la reunión digital!</a>";
+        document.getElementById('timerWrapper').outerHTML = '<form id="registro_web" class="py-4"><div class="input-group"><input type="text" class="form-control" name="nombre" placeholder="Nombre" style="border-radius: 5px 0 0 0 !important;"><input type="text" name="apellido" style="border-radius: 0 5px 0 0 !important;" class="form-control" placeholder="Apellido"></div><input type="email" placeholder="Correo electrónico" name="email" class="required email" required=""><button id="enviar_info">Entrar a la reunión digital</button>';
+        document.getElementById('enviar_info').addEventListener('click', function() {
+            $.ajax({
+              method: "post",
+              url: "https://info.partidodigital.org.uy/form/submit?formId=8&ajax=true",
+              headers: { 'X-Requested-With': 'XMLHttpRequest' },
+              dataType: "json",
+              data: $.param({
+                "mauticform[nombre]": $("[name=nombre]").val(),
+                "mauticform[apellido]": $("[name=apellido]").val(),
+                "mauticform[email]": $("[name=email]").val(),
+                "mauticform[submit]": 1,
+                "mauticform[formId]": 8,
+                "mauticform[formName]": "reunion",
+                "mauticform[return]": ""
+              }),
+              beforeSend: function () {
+                if (
+                  $("[name=nombre]").val() === "" ||
+                  $("[name=apellido]").val() === "" ||
+                  $("[name=email]").val() === "") {
+                  $("#enviar_info")
+                    .attr("disabled", true)
+                    .addClass("error")
+                    .html("Algún campo está vacío. Intentalo de nuevo.");
+                  setTimeout(function () {
+                    $("#enviar_info")
+                      .attr("disabled", false)
+                      .removeClass("error")
+                      .html("Entrar a la reunión digital");
+                  }, 5000);
+                  return false;
+                }
+                $("#enviar_info")
+                  .attr("disabled", true)
+                  .html("Enviando...");
+              },
+              success: function () {
+                $("#enviar_info")
+                  .attr("disabled", true)
+                  .html("Datos enviados. Entrando a la reunión...");
+                setTimeout(function () {
+                  document.location.href = "https://meet.jit.si/PartidoDigital";
+                }, 2000);
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                $("#enviar_info")
+                  .attr("disabled", true)
+                  .html("Hubo un error. Prueba de nuevo.");
+                setTimeout(function () {
+                  $("#enviar_info")
+                    .attr("disabled", false)
+                    .html("Entrar a la reunión digital");
+                }, 5000);
+              }
+            });
+          });
     }
 }, second);

@@ -1,21 +1,9 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: Arial;
 }
 
 .container {
     color: #3e6189;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    flex-direction: column;
 }
 
 #timer {
@@ -29,61 +17,66 @@ img#logo {
     margin-bottom: 2em;
 }
 
-h2, h3, h4 {
-    font-weight: normal;
-    margin-top: 0.5em;
-}
-
-a {
-    font-size: 2em;
-    text-decoration: none;
-    margin-top: 0.5em;
-    background-color: #f36f22;
-    border-radius: 15px;
-    padding: 0.4em;
-    color: #fff;
-}
-
-a:hover {
-    color: #3e6189;
-}
-
 ul#timer li {
     display: inline-block;
     font-size: 1em;
     list-style-type: none;
-    padding: 0.5em;
+    padding: 0 0.5em;
     text-transform: uppercase;
 }
 
 ul#timer li span {
     display: block;
     font-size: 3rem;
+    line-height: 3rem;
 }
 
-#instructions {
-    margin-top: 2em;
-}
-
-ul#steps {
-    display: flex;
-    align-items: stretch; /* Default */
-    justify-content: space-between;
+input {
+    font-size: 0.875em !important;
     width: 100%;
-    margin: 2em 0 0 0;
+    height: 50px !important;
+    padding: 0px 15px 0px 15px !important;
+    background: transparent;
+    outline: none;
+    color: #000 !important;
+    border: solid 1px #000 !important;
+    border-bottom: none !important;
+    border-radius: 0 !important;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#enviar_info {
     padding: 0;
+    margin: 0;
+    font-size: 0.875em;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid #000;
+    background-color: #f36f21;
+    border-radius: 0 0 5px 5px;
+    width: 100%;
+    height: 50px;
 }
 
-ul#steps li {
-    display: block;
-    flex: 0 1 auto; /* Default */
-    list-style-type: none;
-    width: 16em;
-    text-align: center;
+.error {
+    -webkit-animation: blink 1s infinite;  /* Safari 4+ */
+    -moz-animation: blink 1s infinite;  /* Fx 5+ */
+    -o-animation: blink 1s infinite;  /* Opera 12+ */
+    animation: blink 1s infinite;  /* IE 10+, Fx 29+ */
 }
 
-ul#steps li img {
-    width: 5em;
-    display: block;
-    margin: 0 auto 1em;
+@-webkit-keyframes blink {
+    0%, 49% {
+        background-color: #f36f21;
+    }
+    50%, 100% {
+        background-color: #e50000;
+    }
 }
