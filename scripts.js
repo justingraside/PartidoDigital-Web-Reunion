@@ -4,7 +4,7 @@ var second = 1000,
     day = hour * 24,
     hoy = new Date(),
     diaReunion = 3,
-    fechaReunion = new Date("Wed May 1 2019"),
+    fechaReunion = new Date("May 2 2019"),
     horaReunion = { h: 20, m: 00 };
 
 var meses = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
