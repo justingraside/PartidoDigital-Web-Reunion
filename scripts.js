@@ -96,7 +96,7 @@ x = setInterval(function () {
                   .attr("disabled", true)
                   .html("Datos enviados. Entrando a la reunión...");
                 setTimeout(function () {
-                  document.location.href = "https://meet.jit.si/PartidoDigital";
+                  document.location.href = "https://us04web.zoom.us/j/4418283181";
                 }, 2000);
               },
               error: function (jqXHR, textStatus, errorThrown) {
