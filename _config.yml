@@ -1,11 +1,23 @@
-fecha: May 2 2019 20:00:00 GMT-0300     # Tiene que seguir este mismo formato
+# Fecha específica para la reunión. 
+# Tiene que seguir este mismo formato
+fecha: May 2 2019 20:00:00 GMT-0300
 
-dia: Martes                             # Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo
+# Próximo día de la reunión
+# Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo
+dia: Martes
 
-hora: 20:00                             # Tiene que seguir este mismo formato (24hs)
+# Hora del próximo día de la reunión
+# Tiene que seguir este mismo formato (24hs)
+hora: 20:00
 
-duracion: 1 hora                        # Este texto se usa tal cuál se ponga acá
+# Duración de la reunión
+# Este texto se usa tal cuál se ponga acá
+duracion: 1 hora
 
-habilitado: true                        # true: prioriza fecha sino va por el próximo día a la hora indicada
-                                        #       si la fecha ya pasó usa el dia y la hora
-                                        # false: deshabilita cualquier opción mostrando un formulario para subscribirse
+# Si está habilitado el countdown
+# true: prioriza fecha sino va por el próximo día a la hora indicada si la fecha ya pasó usa el dia y la hora
+# false: deshabilita cualquier opción mostrando un formulario para subscribirse
+habilitado: true
+
+# URL de la reunión a la que redirigir luego de que se llene el formulario
+url: https://us04web.zoom.us/j/4418283181
