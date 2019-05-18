@@ -11,7 +11,7 @@ var meses = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
     "Agosto", "Septiembre", "Octubre", "Noviembre", "Septiembre" ];
 var dias = [ "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" ];
 
-function nextDay(d, x){
+function calcProxDia(d, x){
     var now = new Date(d.getTime());
     now.setHours(horaReunion.h, horaReunion.m, 0, 0);
     now.setDate(now.getDate() + (x+(7-now.getDay())) % 7);
@@ -20,19 +20,19 @@ function nextDay(d, x){
 }
 
 var proxReunion,
-    proxMartes = nextDay(hoy, diaReunion);
-if(fechaReunion) {
+    proxDia = calcProxDia(hoy, diaReunion);
+if(fechaReunion && fechaReunion.getFullYear() >= hoy.getFullYear() && fechaReunion.getMonth() >= hoy.getMonth() && fechaReunion.getDate() >= hoy.getDate()) {
     proxReunion = fechaReunion;
-} else if(proxMartes.getDate() === hoy.getDate() && proxMartes.getMonth() === hoy.getMonth()) {
-    // Hoy es Martes
+} else if(prodDia.getDate() === hoy.getDate() && proxDia.getMonth() === hoy.getMonth()) {
+    // Hoy es diaReunion
     if(hoy.getHours() <= horaReunion.h) {
-        proxReunion = proxMartes;
+        proxReunion = proxDia;
     } else {
-        proxMartes.setDate(proxMartes.getDate() + 1);
-        proxReunion = nextDay(proxMartes, diaReunion);
+        proxDia.setDate(proxDia.getDate() + 1);
+        proxReunion = calcProxDia(proxDia, diaReunion);
     }
 } else {
-    proxReunion = proxMartes;
+    proxReunion = proxDia;
 }
 
 document.getElementById('description').innerHTML = "<i>" + dias[proxReunion.getDay() - 1] + " "
