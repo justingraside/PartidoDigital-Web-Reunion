@@ -1,5 +1,11 @@
-fecha: May 2 2019 20:00:00 GMT-0300
-dia: Martes
-hora: 20:00
-duracion: 1 hora
-habilitado: true
+fecha: May 2 2019 20:00:00 GMT-0300     # Tiene que seguir este mismo formato
+
+dia: Martes                             # Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo
+
+hora: 20:00                             # Tiene que seguir este mismo formato (24hs)
+
+duracion: 1 hora                        # Este texto se usa tal cuál se ponga acá
+
+habilitado: true                        # true: prioriza fecha sino va por el próximo día a la hora indicada
+                                        #       si la fecha ya pasó usa el dia y la hora
+                                        # false: deshabilita cualquier opción mostrando un formulario para subscribirse
