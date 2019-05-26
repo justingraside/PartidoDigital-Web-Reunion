@@ -1,6 +1,3 @@
----
----
-    
 var meses = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
     "Agosto", "Septiembre", "Octubre", "Noviembre", "Septiembre" ];
 var dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" ];
@@ -10,11 +7,11 @@ var second = 1000,
     hour = minute * 60,
     day = hour * 24,
     hoy = new Date(),
-    duracionReunion = {{ site.duracion }},
-    urlReunion = "{{ site.link }}",
-    diaReunion = dias.indexOf("{{ site.dia }}"),
-    fechaReunion = new Date("{{ site.fecha }}"),
-    horaReunion = { h: "{{ site.hora }}".split(":")[0], m: "{{ site.hora }}".split(":")[1] };
+    duracionReunion = 60,
+    urlReunion = "https://us04web.zoom.us/j/4418283181",
+    diaReunion = dias.indexOf("Martes"),
+    fechaReunion = new Date("May 25 2019 22:00:00 GMT-0300"),
+    horaReunion = { h: "20:00".split(":")[0], m: "20:00".split(":")[1] };
 
 function calcProxDia(d, x){
     var now = new Date(d.getTime());
@@ -47,7 +44,7 @@ function duracionTexto(duracion) {
 
 var proxReunion,
     proxDia = calcProxDia(hoy, diaReunion);
-if(JSON.parse("{{ site.habilitado }}")) {
+if(JSON.parse("false")) {
     if(proxDia.getFullYear() == hoy.getFullYear() && proxDia.getMonth() === hoy.getMonth() && proxDia.getDate() === hoy.getDate()) {
         if(hoy.getTime() <= proxDia.getTime() + duracionReunion * 60000) {
             proxReunion = proxDia;
@@ -64,11 +61,11 @@ if(JSON.parse("{{ site.habilitado }}")) {
     }
   }
 } else { 
-  // Cargando template de _includes/reunion_deshabilitada.html: {% include reunion_deshabilitada.html %}
-  document.getElementById('info_reunion').outerHTML = '{{ reunion_deshabilitada | strip_newlines }}';
+  // Cargando template de _includes/reunion_deshabilitada.html: ✔
+  document.getElementById('info_reunion').outerHTML = '<div class="p-0 my-4">    <h2 id="head" class="mb-4">No hay ninguna reunión programada.</h2>    <a href="https://partidodigital.org.uy/voluntariado" class="btn btn-primary mb-2">Sumate como Voluntario</a><br><a href="https://partidodigital.org.uy/afiliaciones" class="btn btn-secondary mr-2">Afiliate</a><a href="https://partidodigital.org.uy/donar" class="btn btn-secondary">Doná</a></div>';
 }
 
-if(JSON.parse("{{ site.habilitado }}")) {
+if(JSON.parse("false")) {
   if(urlReunion.indexOf("jit.si") > 0) {
     document.getElementById("instrucciones_jitsi").style.display = "inline";
   }
@@ -94,8 +91,8 @@ if(JSON.parse("{{ site.habilitado }}")) {
 
       if (distance <= 0 || document.stopTimer === true) {
           clearInterval(x);
-          // Cargando template de _includes/formulario_entrar.html: {% include formulario_entrar.html %}
-          document.getElementById('timerWrapper').outerHTML = '{{ formulario_entrar | strip_newlines }}';
+          // Cargando template de _includes/formulario_entrar.html: ✔
+          document.getElementById('timerWrapper').outerHTML = '<form id="registro_web" class="py-4">    <div class="input-group">        <input type="text" class="form-control" name="nombre" placeholder="Nombre" style="border-radius: 5px 0 0 0 !important;">        <input type="text" name="apellido" style="border-radius: 0 5px 0 0 !important;" class="form-control" placeholder="Apellido">    </div>    <input type="email" placeholder="Correo electrónico" name="email" class="required email" required="">    <button id="enviar_info">Entrar a la reunión digital</button></form>';
           document.getElementById('enviar_info').addEventListener('click', function() {
               $.ajax({
                 method: "post",
