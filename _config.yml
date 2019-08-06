@@ -16,8 +16,8 @@ duracion: 60
 # Si está habilitado el countdown
 # true: prioriza fecha (si la fecha ya pasó usa el próximo dia a la hora indicada) sino va por el próximo día a la hora indicada
 # false: deshabilita cualquier opción mostrando un formulario para subscribirse
-habilitado: false
+habilitado: true
 
 # URL de la reunión a la que redirigir luego de que se llene el formulario
 # Si la reunión es con Jitsi (usando un link con jit.si en la dirección) se habilitan las instrucciones
-link: https://us04web.zoom.us/j/4418283181
+link: https://meet.jit.si/PD
