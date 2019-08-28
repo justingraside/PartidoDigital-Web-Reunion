@@ -45,9 +45,9 @@ function duracionTexto(duracion) {
   return out;
 }
 
-var proxReunion,
+var proxReunion = null,
     proxDia = calcProxDia(hoy, diaReunion);
-if(JSON.parse("{{ site.habilitado }}")) {
+if("{{ site.habilitado }}" === "recurrente") {
     if(proxDia.getFullYear() == hoy.getFullYear() && proxDia.getMonth() === hoy.getMonth() && proxDia.getDate() === hoy.getDate()) {
         if(hoy.getTime() <= proxDia.getTime() + duracionReunion * 60000) {
             proxReunion = proxDia;
@@ -58,17 +58,39 @@ if(JSON.parse("{{ site.habilitado }}")) {
     } else {
         proxReunion = proxDia;
     }
-  if(fechaReunion.getFullYear() >= hoy.getFullYear() && fechaReunion.getMonth() >= hoy.getMonth() && fechaReunion.getDate() >= hoy.getDate()) {
-    if(hoy.getTime() <= fechaReunion.getTime() + duracionReunion * 60000) {
+  if(fechaReunion.getFullYear() >= hoy.getFullYear()) {
+    if(fechaReunion.getMonth() > hoy.getMonth()) {
       proxReunion = fechaReunion;
+    } else if(fechaReunion.getMonth() == hoy.getMonth()) {
+      if(fechaReunion.getDate() > hoy.getDate()) {
+        proxReunion = fechaReunion;
+      } else if(fechaReunion.getDate() == hoy.getDate()) {
+        if(hoy.getTime() <= fechaReunion.getTime() + duracionReunion * 60000) {
+          proxReunion = fechaReunion;
+        }
+      }
     }
   }
-} else { 
+} else if("{{ site.habilitado }}" === "fecha") {
+  if(fechaReunion.getFullYear() >= hoy.getFullYear()) {
+    if(fechaReunion.getMonth() > hoy.getMonth()) {
+      proxReunion = fechaReunion;
+    } else if(fechaReunion.getMonth() == hoy.getMonth()) {
+      if(fechaReunion.getDate() > hoy.getDate()) {
+        proxReunion = fechaReunion;
+      } else if(fechaReunion.getDate() == hoy.getDate()) {
+        if(hoy.getTime() <= fechaReunion.getTime() + duracionReunion * 60000) {
+          proxReunion = fechaReunion;
+        }
+      }
+    }
+  }
+} else if("{{ site.habilitado }}" === "off") { 
   // Cargando template de _includes/reunion_deshabilitada.html: {% include reunion_deshabilitada.html %}
   document.getElementById('info_reunion').outerHTML = '{{ reunion_deshabilitada | strip_newlines }}';
 }
 
-if(JSON.parse("{{ site.habilitado }}")) {
+if("{{ site.habilitado }}" !== "off" && proxReunion != null) {
   if(urlReunion.indexOf("jit.si") > 0) {
     document.getElementById("instrucciones_jitsi").style.display = "inline";
   }
