@@ -47,7 +47,7 @@ function duracionTexto(duracion) {
 
 var proxReunion,
     proxDia = calcProxDia(hoy, diaReunion);
-if(JSON.parse("{{ site.habilitado }}")) {
+if("{{ site.habilitado }}" === "recurrente") {
     if(proxDia.getFullYear() == hoy.getFullYear() && proxDia.getMonth() === hoy.getMonth() && proxDia.getDate() === hoy.getDate()) {
         if(hoy.getTime() <= proxDia.getTime() + duracionReunion * 60000) {
             proxReunion = proxDia;
@@ -63,12 +63,18 @@ if(JSON.parse("{{ site.habilitado }}")) {
       proxReunion = fechaReunion;
     }
   }
-} else { 
+} else if("{{ site.habilitado }}" === "fecha") {
+    if(fechaReunion.getFullYear() >= hoy.getFullYear() && fechaReunion.getMonth() >= hoy.getMonth() && fechaReunion.getDate() >= hoy.getDate()) {
+    if(hoy.getTime() <= fechaReunion.getTime() + duracionReunion * 60000) {
+      proxReunion = fechaReunion;
+    }
+  }
+} else if("{{ site.habilitado }}" === "off") { 
   // Cargando template de _includes/reunion_deshabilitada.html: {% include reunion_deshabilitada.html %}
   document.getElementById('info_reunion').outerHTML = '{{ reunion_deshabilitada | strip_newlines }}';
 }
 
-if(JSON.parse("{{ site.habilitado }}")) {
+if("{{ site.habilitado }}" !== "off") {
   if(urlReunion.indexOf("jit.si") > 0) {
     document.getElementById("instrucciones_jitsi").style.display = "inline";
   }
