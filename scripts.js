@@ -5,6 +5,72 @@ var meses = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
     "Agosto", "Septiembre", "Octubre", "Noviembre", "Septiembre" ];
 var dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" ];
 
+var bindFormulario = function(accionBoton) {
+  document.getElementById('enviar_info').addEventListener('click', function() {
+    $.ajax({
+      method: "post",
+      url: "https://info.partidodigital.org.uy/form/submit?formId=8&ajax=true",
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      dataType: "json",
+      data: $.param({
+        "mauticform[nombre]": $("[name=nombre]").val(),
+        "mauticform[apellido]": $("[name=apellido]").val(),
+        "mauticform[email]": $("[name=email]").val(),
+        "mauticform[submit]": 1,
+        "mauticform[formId]": 8,
+        "mauticform[formName]": "reunion",
+        "mauticform[return]": ""
+      }),
+      beforeSend: function () {
+        if (
+          $("[name=nombre]").val() === "" ||
+          $("[name=apellido]").val() === "" ||
+          $("[name=email]").val() === "") {
+          $("#enviar_info")
+            .attr("disabled", true)
+            .addClass("error")
+            .html("Algún campo está vacío. Intentalo de nuevo.");
+          setTimeout(function () {
+            $("#enviar_info")
+              .attr("disabled", false)
+              .removeClass("error")
+              .html(accionBoton.default);
+          }, 5000);
+          return false;
+        }
+        $("#enviar_info")
+          .attr("disabled", true)
+          .html("Enviando...");
+      },
+      success: function () {
+        $("#enviar_info")
+          .attr("disabled", true)
+          .html(accionBoton.success);
+        setTimeout(function () {
+          document.location.href = urlReunion;
+        }, 2000);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        $("#enviar_info")
+          .attr("disabled", true)
+          .html("Hubo un error. Prueba de nuevo.");
+        setTimeout(function () {
+          $("#enviar_info")
+            .attr("disabled", false)
+            .html(accionBoton.default);
+        }, 5000);
+      }
+    });
+  });
+}
+
+var addFormulario = function(accionBoton) {
+  // Cargando template de _includes/formulario_entrar.html: {% include formulario_entrar.html %}
+  document.getElementById('timerWrapper').outerHTML = '{{ formulario_entrar | strip_newlines }}';
+  document.getElementById('enviar_info').innerHTML = accionBoton.default;
+  bindFormulario(accionBoton);
+}
+
 var second = 1000,
     minute = second * 60,
     hour = minute * 60,
@@ -14,7 +80,8 @@ var second = 1000,
     urlReunion = "{{ site.link }}",
     diaReunion = dias.indexOf("{{ site.dia }}"),
     fechaReunion = new Date("{{ site.fecha }}"),
-    horaReunion = { h: "{{ site.hora }}".split(":")[0], m: "{{ site.hora }}".split(":")[1] };
+    horaReunion = { h: "{{ site.hora }}".split(":")[0], m: "{{ site.hora }}".split(":")[1] },
+    accionBoton = {default: "Entrar a la reunión digital", success: "Datos enviados. Entrando a la reunión..."};
 
 function calcProxDia(d, x){
     var now = new Date(d.getTime());
@@ -88,6 +155,9 @@ if("{{ site.habilitado }}" === "recurrente") {
 } else if("{{ site.habilitado }}" === "off") { 
   // Cargando template de _includes/reunion_deshabilitada.html: {% include reunion_deshabilitada.html %}
   document.getElementById('info_reunion').outerHTML = '{{ reunion_deshabilitada | strip_newlines }}';
+  document.getElementById('timerWrapper').outerHTML = '{{ formulario_entrar | strip_newlines }}';
+  accionBoton = {default: "Recibir notificación de próxima reunión", success: "Datos enviados. ¡Gracias por tu interes!"};
+  addFormulario(accionBoton);
 }
 
 if("{{ site.habilitado }}" !== "off" && proxReunion != null) {
@@ -116,64 +186,11 @@ if("{{ site.habilitado }}" !== "off" && proxReunion != null) {
 
       if (distance <= 0 || document.stopTimer === true) {
           clearInterval(x);
-          // Cargando template de _includes/formulario_entrar.html: {% include formulario_entrar.html %}
-          document.getElementById('timerWrapper').outerHTML = '{{ formulario_entrar | strip_newlines }}';
-          document.getElementById('enviar_info').addEventListener('click', function() {
-              $.ajax({
-                method: "post",
-                url: "https://info.partidodigital.org.uy/form/submit?formId=8&ajax=true",
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                dataType: "json",
-                data: $.param({
-                  "mauticform[nombre]": $("[name=nombre]").val(),
-                  "mauticform[apellido]": $("[name=apellido]").val(),
-                  "mauticform[email]": $("[name=email]").val(),
-                  "mauticform[submit]": 1,
-                  "mauticform[formId]": 8,
-                  "mauticform[formName]": "reunion",
-                  "mauticform[return]": ""
-                }),
-                beforeSend: function () {
-                  if (
-                    $("[name=nombre]").val() === "" ||
-                    $("[name=apellido]").val() === "" ||
-                    $("[name=email]").val() === "") {
-                    $("#enviar_info")
-                      .attr("disabled", true)
-                      .addClass("error")
-                      .html("Algún campo está vacío. Intentalo de nuevo.");
-                    setTimeout(function () {
-                      $("#enviar_info")
-                        .attr("disabled", false)
-                        .removeClass("error")
-                        .html("Entrar a la reunión digital");
-                    }, 5000);
-                    return false;
-                  }
-                  $("#enviar_info")
-                    .attr("disabled", true)
-                    .html("Enviando...");
-                },
-                success: function () {
-                  $("#enviar_info")
-                    .attr("disabled", true)
-                    .html("Datos enviados. Entrando a la reunión...");
-                  setTimeout(function () {
-                    document.location.href = urlReunion;
-                  }, 2000);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                  $("#enviar_info")
-                    .attr("disabled", true)
-                    .html("Hubo un error. Prueba de nuevo.");
-                  setTimeout(function () {
-                    $("#enviar_info")
-                      .attr("disabled", false)
-                      .html("Entrar a la reunión digital");
-                  }, 5000);
-                }
-              });
-            });
+          addFormulario(accionBoton);
       }
   }, second);
+} else {
+  accionBoton = {default: "Recibir notificación de próxima reunión", success: "Datos enviados. ¡Gracias por tu interes!"};
+  document.getElementById("duracion-wrapper").style.display = "none";
+  addFormulario(accionBoton);
 }
