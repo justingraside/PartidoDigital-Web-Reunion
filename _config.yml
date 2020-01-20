@@ -22,3 +22,6 @@ habilitado: fecha
 # URL de la reunión a la que redirigir luego de que se llene el formulario
 # Si la reunión es con Jitsi (usando un link con jit.si en la dirección) se habilitan las instrucciones
 link: https://meet.jit.si/PartidoDigital
+
+# NO TOCAR - Exclusión de archivos de la generación de la web estática por Jekyll
+exclude: ["CNAME", "package.json", "package-lock.json", "README.md"]

@@ -1,0 +1,30 @@
+{
+  "name": "partidodigital-web-reunion",
+  "version": "1.0.0",
+  "description": "Web de Reunión Digital del Partido Digital",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "concurrently --kill-others \"jekyll serve\" \"jest --watch\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PartidoDigital/PartidoDigital-Web-Reunion.git"
+  },
+  "author": "Leo Giovanetti <hello@leog.me>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PartidoDigital/PartidoDigital-Web-Reunion/issues"
+  },
+  "homepage": "https://github.com/PartidoDigital/PartidoDigital-Web-Reunion#readme",
+  "dependencies": {
+    "concurrently": "^5.0.2",
+    "jest": "^24.9.0"
+  },
+  "jest": {
+    "automock": false,
+    "verbose": false,
+    "collectCoverageFrom": [
+      "**/scripts/*.{js,jsx}"
+    ]
+  }
+}
