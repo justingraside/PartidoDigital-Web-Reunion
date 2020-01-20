@@ -2,6 +2,11 @@ body {
     font-family: Arial;
 }
 
+.btn-primary {
+    background-color: #f36f21;
+    border-color: #f36f21;
+}
+
 .container {
     color: #3e6189;
 }
